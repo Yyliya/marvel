@@ -50,9 +50,10 @@ const useMarvelService = () => {
             pageCount: comic.pageCount
 				? `${comic.pageCount} p.`
 				: "No information about the number of pages",
-                price: comic.prices[0].price
+            price: comic.prices[0].price
 				? `${comic.prices[0].price}$`
 				: "not available",
+            language: comic.textObjects[0]?.language || "en-us",
         };
     }
 
