@@ -5,6 +5,7 @@ import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Spinner from '../spinner/spinner';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const ComicsList = () => {
 
@@ -42,13 +43,18 @@ const ComicsList = () => {
     function renderItems (arr) {
         const items = arr.map((item, i) => {
             return (
-                <li className="comics__item" key={i}>
+                <motion.li 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ amount: 0.3}}
+                    transition={{ ease: "easeOut", duration: 1 }}
+                    className="comics__item" key={i}>
                     <Link to={`/comics/${item.id}`}>
                         <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
                         <div className="comics__item-name">{item.title}</div>
                         <div className="comics__item-price">{item.price}</div>
                     </Link>
-                </li>
+                </motion.li>
             )
         })
 

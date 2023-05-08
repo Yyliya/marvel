@@ -5,6 +5,7 @@ import ErrorMessage from '../errorMessage/errorMessage';
 import Spinner from '../spinner/spinner';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll } from 'framer-motion';
 
 const CharList = (props) => {
 
@@ -56,7 +57,11 @@ const CharList = (props) => {
             }
             
             return (
-                <li 
+                <motion.li 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ amount: 0.3}}
+                    transition={{ ease: "easeOut", duration: 1 }}
                     className="char__item"
                     tabIndex={0}
                     ref={el => itemRefs.current[i] = el}
@@ -73,7 +78,7 @@ const CharList = (props) => {
                     }}>
                         <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
                         <div className="char__name">{item.name}</div>
-                </li>
+                </motion.li>
             )
         });
         // А эта конструкция вынесена для центровки спиннера/ошибки
@@ -103,6 +108,7 @@ const CharList = (props) => {
                 <div className="inner">load more</div>
             </button>
         </div>
+
     )
 }
 

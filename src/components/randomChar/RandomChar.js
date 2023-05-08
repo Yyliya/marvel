@@ -4,6 +4,7 @@ import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/errorMessage';
 import { useEffect, useState } from 'react';
+import {delay, motion} from 'framer-motion';
 
 const RandomChar = () => {
 
@@ -30,16 +31,38 @@ const RandomChar = () => {
             .then(onCharLoaded);
     }
 
+    const blokAnimation = {
+        hidden: {
+            y: -100,
+            opasity: 0
+        },
+        visible: custom => ({
+            y: 0,
+            opasity: 1,
+            delay: 1,
+            transition: {delay: custom * 0.2},
+        }),
+    }
+
     const errorMessage = error ? <ErrorMessage/> : null;
     const spinner = loading ? < Spinner/> : null;
     const content = !(loading || error || !char) ? <View char={char}></View> : null;
 
     return (
-        <div className="randomchar">
+        <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={blokAnimation}
+        custom={2}
+        viewport={{ once: true }}
+            className="randomchar">
             {errorMessage}
             {spinner}
             {content}
-            <div className="randomchar__static">
+            <motion.div
+            variants={blokAnimation}
+            custom={4}
+            className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
                     Do you want to get to know him better?
@@ -51,8 +74,8 @@ const RandomChar = () => {
                     <div className="inner" >try it</div>
                 </button>
                 <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     )
 }
 
