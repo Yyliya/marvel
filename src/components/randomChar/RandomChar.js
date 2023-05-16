@@ -2,9 +2,9 @@ import './randomChar.scss';
 import useMarvelService from '../../services/MarvelService';
 import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/errorMessage';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import { useEffect, useState } from 'react';
-import {delay, motion} from 'framer-motion';
+import { motion} from 'framer-motion';
 
 const RandomChar = () => {
 

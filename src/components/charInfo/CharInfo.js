@@ -1,5 +1,5 @@
 import './charInfo.scss';
-import ErrorMessage from '../errorMessage/errorMessage';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/spinner';
 import Skeleton from '../skeleton/Skeleton'
 import useMarvelService from '../../services/MarvelService';

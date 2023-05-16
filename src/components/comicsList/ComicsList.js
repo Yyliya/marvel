@@ -2,7 +2,7 @@ import './comicsList.scss';
 
 import { Link } from 'react-router-dom';
 import useMarvelService from '../../services/MarvelService';
-import ErrorMessage from '../errorMessage/errorMessage';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/spinner';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
