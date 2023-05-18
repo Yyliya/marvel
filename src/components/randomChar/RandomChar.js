@@ -1,15 +1,15 @@
 import './randomChar.scss';
+
 import useMarvelService from '../../services/MarvelService';
+import setContent from '../../utils/setContent';
 import mjolnir from '../../resources/img/mjolnir.png';
-import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 import { useEffect, useState } from 'react';
 import { motion} from 'framer-motion';
 
 const RandomChar = () => {
 
     const [char, setChar] = useState(null);
-    const {loading, error, getCharacter, clearError} = useMarvelService();
+    const {process, setProcess, getCharacter, clearError} = useMarvelService();
 
     useEffect(() => {
         updateChar();
@@ -28,7 +28,8 @@ const RandomChar = () => {
         clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacter(id)
-            .then(onCharLoaded);
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
     const blokAnimation = {
@@ -44,10 +45,6 @@ const RandomChar = () => {
         }),
     }
 
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? < Spinner/> : null;
-    const content = !(loading || error || !char) ? <View char={char}></View> : null;
-
     return (
         <motion.div
         initial="hidden"
@@ -56,9 +53,7 @@ const RandomChar = () => {
         custom={2}
         viewport={{ once: true }}
             className="randomchar">
-            {errorMessage}
-            {spinner}
-            {content}
+                {setContent(process, View, char)}
             <motion.div
             variants={blokAnimation}
             custom={4}
@@ -79,8 +74,8 @@ const RandomChar = () => {
     )
 }
 
-const View = ({char}) => {
-    const {name, description, thumbnail, homepage, wiki} = char;
+const View = ({data}) => {
+    const {name, description, thumbnail, homepage, wiki} = data;
     let imgStyle = {'objectFit' : 'cover'};
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'contain'};

@@ -2,16 +2,15 @@ import { useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import useMarvelService from '../../../services/MarvelService';
-import Spinner from '../../spinner/spinner';
-import ErrorMessage from '../../errorMessage/ErrorMessage';
+import setContent from '../../../utils/setContent';
 import AppBanner from '../../appBanner/AppBanner';
 
 import './singleCharacterLayout.scss';
 
 const SingleCharacterLayout = () => {
     const {charId} = useParams();
-    const [character, setCharacter] = useState(null);
-    const {loading, error, getCharacterName, clearError} = useMarvelService();
+    const [char, setChar] = useState(null);
+    const {getCharacterName, clearError, process, setProcess} = useMarvelService();
 
     useEffect(() => {
         updateCharacter()
@@ -21,28 +20,23 @@ const SingleCharacterLayout = () => {
         clearError();
         getCharacterName(charId)
             .then(onCharacterLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
-    const onCharacterLoaded = (character) => {
-        setCharacter(character);
+    const onCharacterLoaded = (char) => {
+        setChar(char);
     }
-
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !character) ? <View character={character}/> : null;
 
     return (
         <>
             <AppBanner/>
-            {errorMessage}
-            {spinner}
-            {content}
+            {setContent(process, View, char)}
         </>
     )
 }
 
-const View = ({character}) => {
-    const {name, description, thumbnail} = character;
+const View = ({data}) => {
+    const {name, description, thumbnail} = data;
 
     return (
         <div className="single-comic">
