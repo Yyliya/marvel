@@ -4,7 +4,7 @@ import useMarvelService from '../../services/MarvelService';
 import PropTypes from 'prop-types';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo} from 'react';
 import { motion } from 'framer-motion';
 
 const setContent = (process, Component, newItemLoading) => {
@@ -33,6 +33,7 @@ const CharList = (props) => {
 
     useEffect(() => {
         onRequest(offset, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onRequest = (offset, initial) => {
@@ -105,9 +106,13 @@ const CharList = (props) => {
         )
     }
 
+    const elements = useMemo(() => {
+        return setContent(process, () => renderItems(charList), newItemLoading)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [process])
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(charList), newItemLoading)}
+            {elements}
             <button 
                 className="button button__main button__long"
                 disabled={newItemLoading}

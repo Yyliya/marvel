@@ -30,10 +30,11 @@ const ComicsList = () => {
     const [comicEnded, setComicEnded] = useState(false);
 
 
-    const {loading, error, setProcess, process, getAllComics} = useMarvelService();
+    const {setProcess, process, getAllComics} = useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onRequest = (offset, initial) => {
