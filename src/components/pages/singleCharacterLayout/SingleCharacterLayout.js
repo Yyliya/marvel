@@ -10,7 +10,7 @@ import './singleCharacterLayout.scss';
 const SingleCharacterLayout = () => {
     const {charId} = useParams();
     const [char, setChar] = useState(null);
-    const {getCharacterName, clearError, process, setProcess} = useMarvelService();
+    const {getCharacter, clearError, process, setProcess} = useMarvelService();
 
     useEffect(() => {
         updateCharacter()
@@ -19,7 +19,7 @@ const SingleCharacterLayout = () => {
 
     const updateCharacter = () => {
         clearError();
-        getCharacterName(charId)
+        getCharacter(charId)
             .then(onCharacterLoaded)
             .then(() => setProcess('confirmed'))
     }
